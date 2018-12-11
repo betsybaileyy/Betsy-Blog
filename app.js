@@ -1,4 +1,4 @@
-// movie = subject, review = post
+// movie = subject, post = post
 // left off in tutorial at part about body parser
 const express = require('express');
 const app = express();
@@ -37,10 +37,18 @@ app.get('/posts/new', (req, res) => {
     res.render('posts-new', {});
 });
 
+app.get('/posts/:id', (req, res) => {
+    Post.findById(req.params.id).then((post) => {
+        res.render('posts-show', { post: post })
+    }).catch((err) => {
+        console.log(err.message);
+    })
+});
+
 app.post('/posts', (req, res) => {
-    Post.create(req.body).then((review) => {
-        console.log(review);
-        res.redirect('/');
+    Post.create(req.body).then((post) => {
+        console.log(post);
+        res.redirect(`/posts/${post._id}`);
     }).catch((err) => {
         console.log(err.message);
     })
