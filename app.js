@@ -1,16 +1,19 @@
 // movie = subject, review = post
-
-const express = require('express')
-const app = express()
+// left off in tutorial at part about body parser
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
 
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/betsy-blog');
+app.use(bodyParser.urlencoded({ extended: true }));
 
-const Post = mongoose.model('Review', {
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/betsy-blog', { useNewUrlParser: true });
+
+const Post = mongoose.model('Post', {
     title: String, // title of the post itsself
     subjectTitle: String //like subject of tv, dogs, etc
-})
+});
 
 let posts = [
     { title: "Great Post", subjectTitle: "Dogs" },
@@ -28,6 +31,21 @@ app.get('/', (req, res) => {
     .catch(err => {
         console.log(err);
     })
+});
+
+app.get('/posts/new', (req, res) => {
+    res.render('posts-new', {});
+});
+
+app.post('/posts', (req, res) => {
+    Post.create(req.body).then((review) => {
+        console.log(review);
+        res.redirect('/');
+    }).catch((err) => {
+        console.log(err.message);
+    })
+    // console.log(req.body);
+    // res.render('posts-new', {});
 });
 
 app.listen(3000, () => {
