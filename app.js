@@ -8,7 +8,10 @@ var exphbs = require('express-handlebars');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/betsy-blog', { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/betsy-blog', { useNewUrlParser: true });
+
+const port = process.env.PORT || 3000;
+app.listen(port);
 
 const Post = mongoose.model('Post', {
     title: String, // title of the post itsself
@@ -55,7 +58,7 @@ app.post('/posts', (req, res) => {
     // console.log(req.body);
     // res.render('posts-new', {});
 });
-
-app.listen(3000, () => {
-    console.log('App listening on port 3000 :)')
-});
+// 
+// app.listen(3000, () => {
+//     console.log('App listening on port 3000 :)')
+// });
