@@ -1,0 +1,20 @@
+
+
+<fieldset>
+  <legend>New Blog Post</legend>
+
+  <div class="form-group">
+    <label for="post-title">Title</label><br>
+    <input class="form-control" id="post-title" type="text" name="title" value="{{post.title}}"/>
+  </div>
+
+  <div class="form-group">
+    <label for="post-title">Company</label><br>
+    <input class="form-control" id="post-title" type="text" name="postTitle" value="{{post.postTitle}}" />
+  </div>
+
+  <div class="form-group">
+    <label for="post-description">Description</label><br>
+    <textarea class="form-control" id="post-description" name="description" rows="10" />{{post.description}}</textarea>
+  </div>
+</fieldset>
