@@ -5,7 +5,10 @@ var exphbs = require('express-handlebars');
 const posts = require('./controllers/posts');
 const mongoose = require('mongoose');
 const comments = require('./controllers/comments');
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/retro-retire');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/betsy-blog');
+const port = process.env.PORT || 3000;
+app.listen(port);
+
 
 const bodyParser = require('body-parser');
 
@@ -20,9 +23,9 @@ app.set('view engine', 'handlebars');
 
 require('./controllers/posts')(app);
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log('App listening on port 3000!')
-})
+// app.listen(process.env.PORT || 3000, () => {
+//     console.log('App listening on port 3000!')
+// })
 
 module.exports = app;
 
