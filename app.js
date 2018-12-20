@@ -24,6 +24,7 @@ app.engine('handlebars', exphbs({
 app.set('view engine', 'handlebars');
 
 require('./controllers/posts')(app);
+require('./controllers/comments')(app);
 
 app.listen(process.env.PORT || 3000, () => {
     console.log('App listening on port 3000!')
