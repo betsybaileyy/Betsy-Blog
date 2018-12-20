@@ -4,17 +4,19 @@ const app = express()
 var exphbs = require('express-handlebars');
 const posts = require('./controllers/posts');
 const mongoose = require('mongoose');
-const comments = require('./controllers/comments');
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/betsy-blog');
-const port = process.env.PORT || 3000;
-app.listen(port);
-
+const comments = require('./controllers/comments')(app);
+const Post = require('./models/post');
+const Comment = require('./models/comment');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/betsy-blog', {useNewUrlParser: true});
 
 const bodyParser = require('body-parser');
 
 app.use(methodOverride('_method'))
 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
+
 
 app.engine('handlebars', exphbs({
     defaultLayout: 'main'
@@ -23,10 +25,12 @@ app.set('view engine', 'handlebars');
 
 require('./controllers/posts')(app);
 
-// app.listen(process.env.PORT || 3000, () => {
-//     console.log('App listening on port 3000!')
-// })
+app.listen(process.env.PORT || 3000, () => {
+    console.log('App listening on port 3000!')
+})
 
+// const port = process.env.PORT || 3000;
+// app.listen(port);
 module.exports = app;
 
 
@@ -54,7 +58,7 @@ module.exports = app;
 
 
 
-// // movie = subject, post = post
+
 // // left off in tutorial at part about body parser
 // const express = require('express');
 // const app = express();

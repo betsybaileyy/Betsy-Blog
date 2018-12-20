@@ -1,9 +1,10 @@
-const post = require('../models/post')
+const Post = require('../models/post');
+const Comment = require('../models/comment');
 
 module.exports = function(app) {
 
     app.get('/', (req, res) => {
-        post.find()
+        Post.find()
             .then(posts => {
                 res.render('posts-index', {
                     posts: posts
@@ -14,14 +15,12 @@ module.exports = function(app) {
             })
     })
 
-
-
     app.get('/posts/new', (req, res) => {
         res.render('posts-new', {});
     })
 
     app.get('/posts/:id', (req, res) => {
-        post.findById(req.params.id).then((post) => {
+        Post.findById(req.params.id).then((post) => {
             res.render('posts-show', { post: post })
         }).catch((err) => {
             console.log(err.message);
@@ -29,7 +28,7 @@ module.exports = function(app) {
     });
 
     app.post('/posts', (req, res) => {
-        post.create(req.body).then((post) => {
+        Post.create(req.body).then((post) => {
             console.log(post);
             res.redirect(`/posts/${post._id}`);
         }).catch((err) =>{
@@ -38,13 +37,13 @@ module.exports = function(app) {
     })
 
     app.get('/posts/:id/edit', (req, res) => {
-        post.findById(req.params.id, function(err, post) {
+        Post.findById(req.params.id, function(err, post) {
             res.render('posts-edit', {post: post});
         })
     })
 
     app.put('/posts/:id', (req, res) => {
-      post.findByIdAndUpdate(req.params.id, req.body)
+      Post.findByIdAndUpdate(req.params.id, req.body)
         .then(post => {
           res.redirect(`/posts/${post._id}`)
         })
@@ -55,7 +54,7 @@ module.exports = function(app) {
 
     app.delete('/posts/:id', function (req, res) {
       console.log("DELETE post")
-      post.findByIdAndRemove(req.params.id).then((post) => {
+      Post.findByIdAndRemove(req.params.id).then((post) => {
         res.redirect('/');
       }).catch((err) => {
         console.log(err.message);

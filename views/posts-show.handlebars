@@ -14,8 +14,27 @@
     <!-- Comment form -->
     {{> comment-form}}
 
+    <hr>
+
+      <!-- <input class="form-control" type="hidden" value="{{post.id}}" name="postId">
+      </fieldset> -->
+
+      <!-- <div class="form-group">
+        <button class="btn btn-primary" type="submit">Save Comment</button>
+      </div> -->
+      <h3>Comments</h3>
+
+      <div id="comments">
+          {{#each comments}}
+            {{> comment}}
+        {{/each}}
+    </div>
+
+
+
   </div>
 </div>
+
 
 
 
