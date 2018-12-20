@@ -2,11 +2,7 @@ const express = require('express')
 const methodOverride = require('method-override')
 const app = express()
 var exphbs = require('express-handlebars');
-const posts = require('./controllers/posts');
 const mongoose = require('mongoose');
-const comments = require('./controllers/comments')(app);
-const Post = require('./models/post');
-const Comment = require('./models/comment');
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/betsy-blog', {useNewUrlParser: true});
 
 const bodyParser = require('body-parser');
@@ -23,8 +19,15 @@ app.engine('handlebars', exphbs({
 }));
 app.set('view engine', 'handlebars');
 
-require('./controllers/posts')(app);
-require('./controllers/comments')(app);
+const Post = require('./models/post');
+const Comment = require('./models/comment');
+const posts = require('./controllers/posts');
+const comments = require('./controllers/comments');
+
+// require('./controllers/posts')(app);
+// require('./controllers/comments')(app);
+posts(app);
+comments(app);
 
 app.listen(process.env.PORT || 3000, () => {
     console.log('App listening on port 3000!')

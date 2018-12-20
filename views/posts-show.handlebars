@@ -9,23 +9,17 @@
         <button class="btn btn-primary" type="submit">Delete</button>
     </form></p>
 
-    <hr>
+
 
     <!-- Comment form -->
     {{> comment-form}}
 
-    <hr>
 
-      <!-- <input class="form-control" type="hidden" value="{{post.id}}" name="postId">
-      </fieldset> -->
 
-      <!-- <div class="form-group">
-        <button class="btn btn-primary" type="submit">Save Comment</button>
-      </div> -->
       <h3>Comments</h3>
 
       <div id="comments">
-          {{#each comments}}
+          {{#each post.comments}}
             {{> comment}}
         {{/each}}
     </div>

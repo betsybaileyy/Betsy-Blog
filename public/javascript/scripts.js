@@ -1,5 +1,5 @@
 
-document.getElementById("new-comment").addEventListener("submit", e =>{
+document.getElementById("comment").addEventListener("submit", e =>{
     // prevent the default form behavior
     e.preventDefault();
 
@@ -15,11 +15,11 @@ document.getElementById("new-comment").addEventListener("submit", e =>{
         // wait for the success response from the server
         console.log(response);
 
-        let form = document.getElementById('new-comment');
+        let form = document.getElementById("comment");
 
-        form.reset();
+        this.reset();
         // display the data as a new comment on the page
-        document.getElementById('comments').innerHTML +=
+        document.getElementById('comments').prepend(
 
             <div class="card" id="${this._id}">
                 <div class="card-block">
@@ -28,7 +28,7 @@ document.getElementById("new-comment").addEventListener("submit", e =>{
                     <p><button class="btn btn-link" id="deleteComment" data-comment-id=${response._id}>Delete</button></p>
                 </div>
             </div>
-
+        );
         })
         .catch(function (error) {
             console.log(error);

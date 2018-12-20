@@ -20,7 +20,12 @@ module.exports = function(app) {
     })
 
     app.get('/posts/:id', (req, res) => {
-        Post.findById(req.params.id).then((post) => {
+        Post.findById(req.params.id)
+        .populate('comments')
+        .then((post) => {
+            // Comment.find( {postId : req.params.id} ).then((comment) => {
+            //     console.log("comment:", comment);
+            // })
             res.render('posts-show', { post: post })
         }).catch((err) => {
             console.log(err.message);
@@ -28,6 +33,7 @@ module.exports = function(app) {
     });
 
     app.post('/posts', (req, res) => {
+        console.log("req.body:", req.body);
         Post.create(req.body).then((post) => {
             console.log(post);
             res.redirect(`/posts/${post._id}`);
